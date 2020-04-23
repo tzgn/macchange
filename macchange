@@ -1,0 +1,21 @@
+wlana="wlan0"
+wlanb="wlan1"
+etha="eth0"
+
+if [[ $# == 0 ]]
+then
+	echo "hatalı parametre girişi"
+	echo "kullanım: macchange [interface]"
+	exit 1
+fi
+if [[ "$1" = "$wlana" || "$1" = "$wlanb" || "$1" = "$etha" ]];
+then
+	service NetworkManager stop
+ 	ifconfig $1 down
+ 	macchanger -r $1
+ 	ifconfig $1 up
+ 	service NetworkManager start
+else
+	echo "hatalı parametre girişi"
+        echo "kullanım: macchange [interface]"
+fi
